@@ -19,5 +19,6 @@ from news.views import UnderConstructionPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', UnderConstructionPageView.as_view())
 ]

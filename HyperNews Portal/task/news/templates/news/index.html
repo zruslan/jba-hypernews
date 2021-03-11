@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-  </head>
-  <body>
-    <a target="_blank" href="/news/">Link to the news</a>
-  </body>
-</html>
+{% extends "news/base_template.html" %}
+{% block body %}
+    <h2>Hyper news</h2>
+  {% for key, value in news.items %}
+    <h4>{{ key }}</h4>
+    <ul>
+      {% for x in value %}
+        <li><a target="_blank" href="/news/{{x.link}}/">{{x.title}}</a></li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+  <a target="_blank"  href="/news/create/">Add news</a>
+{% endblock %}
 
 

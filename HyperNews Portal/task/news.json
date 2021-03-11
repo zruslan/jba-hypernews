@@ -1,8 +1,26 @@
 [
   {
     "created": "2020-02-22 16:40:00",
-    "text": "A new star appeared in the sky.",
-    "title": "A star is born",
-    "link": 9234732
+    "text": "Text of the news 1",
+    "title": "News 1",
+    "link": 1
+  },
+  {
+    "created": "2020-02-22 14:00:00",
+    "text": "Text of the news 2",
+    "title": "News 2",
+    "link": 2
+  },
+  {
+    "created": "2019-03-21 01:40:00",
+    "text": "Text of the news 3",
+    "title": "News 3",
+    "link": 3
+  },
+  {
+    "created": "2021-01-01 01:01:00",
+    "text": "Text of the news 4",
+    "title": "News 4",
+    "link": 4
   }
 ]

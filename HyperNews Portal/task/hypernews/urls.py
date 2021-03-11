@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from news.views import UnderConstructionPageView
+from news.views import UnderConstructionPageView, NewsView, SiteIndexPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('', UnderConstructionPageView.as_view())
+    path('news/', UnderConstructionPageView.as_view(), name="news_index"),
+    path('news/<int:news_id>/', NewsView.as_view(), name="news_detail"),
+#    path('', SiteIndexPageView.as_view(), name="site_index")
+    path('', UnderConstructionPageView.as_view(), name="site_index"),
 ]

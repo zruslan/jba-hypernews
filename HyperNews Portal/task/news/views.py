@@ -1,10 +1,12 @@
+import json
+import random
+import re
+from datetime import datetime
+
+from django.conf import settings
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views import View
-from django.http import HttpResponse, Http404
-from django.conf import settings
-import json
-from datetime import datetime, date
-import random
 
 
 # Create your views here.
@@ -28,16 +30,21 @@ def get_new_link(news):
 
 class UnderConstructionPageView(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Coming soon")
+        # return HttpResponse("Coming soon")
+        return redirect("news_index")
 
 
 class NewsIndexPageView(View):
     def get(self, request, *args, **kwargs):
         news = get_news()
         news_sorted = dict()
+        q = request.GET.get("q")
+
         for n in news:
-            created_date = datetime.strptime(n["created"], "%Y-%m-%d %H:%M:%S").date()
-            news_sorted[created_date] = news_sorted.get(created_date, list()) + [n]
+            if not q or re.search(q, n["title"]):
+                created_date = datetime.strptime(n["created"], "%Y-%m-%d %H:%M:%S").date()
+                news_sorted[created_date] = news_sorted.get(created_date, list()) + [n]
+
         news_sorted = {k.strftime("%Y-%m-%d"): v for k, v in sorted(news_sorted.items(), reverse=True)}
 
         return render(request, "news/index.html", {"news": news_sorted})

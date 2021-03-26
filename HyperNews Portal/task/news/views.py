@@ -1,15 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse, Http404
 from django.conf import settings
 import json
 from datetime import datetime, date
+import random
 
 
 # Create your views here.
 def get_news():
     with open(settings.NEWS_JSON_PATH, "r") as f:
         return json.load(f)
+
+
+def save_news(news):
+    with open(settings.NEWS_JSON_PATH, "w") as f:
+        return json.dump(news, f)
+
+
+def get_new_link(news):
+    links = {a['link'] for a in news}
+    while True:
+        link = random.randint(1, 10000)
+        if link not in links:
+            return link
 
 
 class UnderConstructionPageView(View):
@@ -37,3 +51,19 @@ class NewsView(View):
             return render(request, "news/news_detail.html", context=context)
         else:
             raise Http404(f"News #{kwargs['news_id']} not found")
+
+
+class CreateNews(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "news/news_create.html")
+
+    def post(self, request, *args, **kwargs):
+        news = get_news()
+        new = {'created': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+               'text': request.POST.get("text"),
+               'title': request.POST.get("title"),
+               'link': get_new_link(news)
+               }
+        news.append(new)
+        save_news(news)
+        return redirect("news_index")

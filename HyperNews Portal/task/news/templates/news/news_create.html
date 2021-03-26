@@ -1,0 +1,12 @@
+{% extends "news/base_template.html" %}
+{% block body %}
+    <h2>add news</h2>
+    <form action="/create" method="post">{% csrf_token %}
+        <p>Enter a title of the news:<></p>
+        <input type="text" name="title">
+        <p>Enter a text of the news:<></p>
+        <input type="text" name="text">
+        <button type="submit">Submit</button>
+    </form>
+    <a target="_blank" href="/news/">Back to news list</a>
+{% endblock %}
